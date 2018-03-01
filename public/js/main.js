@@ -68,15 +68,10 @@ io.on("update", function(status) {
     json = JSON.parse(status);
     if (typeof json.extra == "undefined") return;
 
-    $(".t-score").html(json.map.team_t.score);
-    $(".ct-score").html(json.map.team_ct.score);
-
-    $(".name").html(json.player.name);
-
     roundtime = json.extra.round.timestart;
     bombtime = json.extra.round.bomb.timestart;
 
-    updateWeapons();
+    update(json);
 
     if(!tickinterval) {
         tickinterval = setInterval(tick, 300);
@@ -84,55 +79,198 @@ io.on("update", function(status) {
 
 });
 
-
-function updateWeapons() {
-    var html = "";
-    var g = 1;
-
-    $("td.pic").html("");
-    $("td.ammo").html("");
-
-    for (var key in json.player.weapons) {
-        var gren = false;
-        if (json.player.weapons.hasOwnProperty(key)) {
-            var weapon = json.player.weapons[key];
-            var name = weapon.name.replace("weapon_", "");
-            console.log(weapon);
-            var type = weapon.type.toLowerCase();
-            var clazz = ".rifle";
-            if(type === "pistol")
-                clazz = ".pistol";
-            else if(type === "c4")
-                clazz = ".c4";
-            else if(type === "knife")
-                clazz = ".knife";
-            else if(type === "grenade") {
-                clazz = ".g" + g;
-                gren = true;
-                g++;
-            }
-            else
-                clazz = ".rifle";
-
-            $(clazz + " td.pic").html("<img src='" + icons[name] + "'>");
-            if(gren) {
-                if(weapon.ammo_reserve > 1) {
-                        $(clazz + " td.ammo").html("x"+weapon.ammo_reserve);
-                }
-            } else {
-                $(clazz + " td.ammo").html(weapon.ammo_clip+ "/" + weapon.ammo_reserve);
-            }
-            $(clazz + " td.reload").html(weapon.ammo_clip < 7 ? "Reload" : "");
-
-        }
-    }
+var slotted = [];
+var meth = {
+	getPlayers: function(){
+		if(this.info.allplayers){
+			return this.info.allplayers
+		}
+		return false;
+	},
+	getCT: function(){
+		var all_players = [];
+		var ret = {
+			players: []
+		};
+		if(this.info.map && this.info.map.team_ct){
+			ret = $.extend({}, ret, this.info.map.team_ct);
+		} else {
+			return false;
+		}
+		for(var psid in this.getPlayers()){
+			var curpl = this.getPlayers()[psid];
+			if(curpl.team.toLowerCase() == "ct"){
+				all_players.push(curpl);
+			}
+		}
+		ret.players = all_players;
+		return ret;
+	},
+	getT: function(){
+		var all_players = [];
+		var ret = {
+			players: []
+		};
+		if(this.info.map && this.info.map.team_t){
+			ret = $.extend({}, ret, this.info.map.team_t);
+		}
+		for(var psid in this.getPlayers()){
+			var curpl = this.getPlayers()[psid];
+			if(curpl.team.toLowerCase() == "t"){
+				all_players.push(curpl);
+			}
+		}
+		ret.players = all_players;
+		return ret;
+	},
+	getObserved: function(){
+		if(this.info.player.steamid != 1){
+			var csid = this.info.player.steamid;
+			var cur_player = this.getPlayers()[csid];
+			if(cur_player){
+				cur_player.steamid = csid;
+				return cur_player;
+			}
+			//if(this.getPlayers()[csid]) return this.getPlayers()[csid];
+			return false;
+		}
+		return this.info.player;
+	},
+	getPlayer: function(slot){
+		slot = parseInt(slot);
+		if(slot >= 0 && slot <= 10) return slotted[slot];
+		return false;
+	},
+	phase: function(){
+		if(this.info.phase_countdowns) return this.info.phase_countdowns;
+		return false;
+	},
+	round: function(){
+		if(this.info.round) return this.info.round;
+		return false;
+	},
+	map: function(){
+		if(this.info.map) return this.info.map;
+		return false;
+	},
+	previously: function(){
+		if(this.info.previously) return this.info.previously;
+		return false;
+	}
 }
+var integ = {
+	info: {},
+	extra: {}
+};
+
+function update(json) {
+	integ.info = json;
+	integ = $.extend({}, meth, integ);
+	if(integ.getPlayers() !== false){
+		for(var k in integ.getPlayers()){
+			slotted[integ.getPlayers()[k].observer_slot] = integ.getPlayers()[k];
+			integ.getPlayers()[k].getState = function(){
+				return this.state;
+			};
+			integ.getPlayers()[k].getWeapons = function(){
+				return this.weapons;
+			};
+			integ.getPlayers()[k].getCurrentWeapon = function(){
+				var temp_weapons = this.getWeapons();
+				if(temp_weapons !== false){
+					for(var k in temp_weapons){
+						if(temp_weapons[k].state == "active"){
+							return temp_weapons[k];
+						}
+					}
+				}
+			};
+			integ.getPlayers()[k].getGrenades = function(){
+				var grenades = [];
+				var temp_weapons = this.getWeapons();
+				if(temp_weapons !== false){
+					for(var k in temp_weapons){
+						if(temp_weapons[k].type == "Grenade"){
+							grenades.push(temp_weapons[k]);
+						}
+					}
+					return grenades;
+				}
+			};
+			integ.getPlayers()[k].getStats = function(){
+				var temp_stats = $.extend({}, this.match_stats, this.state);
+				return temp_stats;
+			};
+		}
+	}
+	updatePage(integ);
+}
+
+function updatePage(data) {
+	var observed = data.getObserved(); // Players information
+
+	updateObserved(observed);
+
+	secondsLeft = data.phase().phase_ends_in;
+
+	$('#time_counter').html(str_pad_left(minutes,'0',2)+':'+str_pad_left(seconds,'0',2));
+
+	var tSide = data.getT();
+	var ctSide = data.getCT();
+
+	updateTeam(tSide, 2);
+	updateTeam(ctSide, 1);
+
+
+	var players = data.getPlayers(); //Array of other players with SteamID as key
+
+
+	//HUD FOR EVERY OTHER PLAYER
+	if(players){
+		for(var steamid in players){
+	
+		}
+	}
+
+
+}
+
+function str_pad_left(string,pad,length) {
+    return (new Array(length+1).join(pad)+string).slice(-length);
+}
+
+
+
+function updateObserved(player) {
+	var stats = player.getStats();
+
+	$('#current_nick').html(player.name);
+	$('#health-text').html(stats.health);
+	$('#armor-text').html(stats.armor);
+	$('#clip-text').html(player.getCurrentWeapon().ammo_clip);
+	$('#reserve-text').html("&#47;" + player.getCurrentWeapon().ammo_reserve);
+	$('#kills_count').html(stats.kills);
+	$('#assist_count').html(stats.assists);
+	$('#death_count').html(stats.deaths);
+}
+
+function updateMoney(amount, eq_amount, team) {
+	$('#team_money_' + team).html("$" + amount);
+	$('#eq_money_' + team).html("$" + eq_amount);
+}
+
+function updateTeam(info, number) {
+	var header = $('#team_' + number);
+	header.find('.team_score').html(info.score);
+	header.find('.team_name').html(info.name);
+}
+
 
 
 var flashing = false;
 
 function tick() {
-    if (typeof json.extra == "undefined") return;
+    /*if (typeof json.extra == "undefined") return;
 
     var btime = json.extra.round.bomb.maxTime - parseInt(new Date().getTime() / 1000 - bombtime);
     var rtime = json.extra.round.maxTime - parseInt(new Date().getTime() / 1000 - roundtime);
@@ -174,7 +312,7 @@ function tick() {
 
         $(".time").html(min > 0 ? min + ":" + sec : sec);
         $(".color").css('background-color', 'lightblue');
-    }
+    }*/
 }
 
 function flash() {
