@@ -2,7 +2,7 @@
     fs = require('fs');
 
     var version = "1.0.4";
-    var csgoport = 3000;
+    var csgoport = 1337;
     var webport = 2626;
 
     var app = require('express')();
@@ -13,7 +13,9 @@
     console.log("\tStarting CSGO Data Integration HUD "+version+" by Double0negative");
     console.log("\thttps://github.com/Double0negative/CSGO-HUD");
 
-    app.set('view engine', 'jade');
+    app.engine('html', require('ejs').renderFile);
+
+    app.set('view engine', 'html');
 
     app.get('/', function(req, res) {
         res.render('index');
