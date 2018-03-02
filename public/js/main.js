@@ -67,12 +67,7 @@ io.on("update", function(status) {
     roundtime = json.extra.round.timestart;
     bombtime = json.extra.round.bomb.timestart;
 
-    update(json);
-
-    if(!tickinterval) {
-        tickinterval = setInterval(tick, 300);
-    }
-
+	update(json);
 });
 
 var slotted = [];
@@ -113,6 +108,40 @@ var meth = {
 		for(var psid in this.getPlayers()){
 			var curpl = this.getPlayers()[psid];
 			if(curpl.team.toLowerCase() == "t"){
+				all_players.push(curpl);
+			}
+		}
+		ret.players = all_players;
+		return ret;
+	},
+	getTeam1: function() {
+		var all_players = [];
+		var ret = {
+			players: []
+		};
+		if(this.info.map && this.info.map.team_t){
+			ret = $.extend({}, ret, this.info.map.team_t);
+		}
+		for(var psid in this.getPlayers()){
+			var curpl = this.getPlayers()[psid];
+			if(curpl.observer_slot > 0 && curpl.observer_slot < 6){
+				all_players.push(curpl);
+			}
+		}
+		ret.players = all_players;
+		return ret;
+	},
+	getTeam2: function() {
+		var all_players = [];
+		var ret = {
+			players: []
+		};
+		if(this.info.map && this.info.map.team_t){
+			ret = $.extend({}, ret, this.info.map.team_t);
+		}
+		for(var psid in this.getPlayers()){
+			var curpl = this.getPlayers()[psid];
+			if(curpl.observer_slot > 5){
 				all_players.push(curpl);
 			}
 		}
@@ -202,121 +231,135 @@ function update(json) {
 	updatePage(integ);
 }
 
+var guns = ['Rifle', 'Submachine Gun', 'SniperRifle', 'Pistol'];
+
 function updatePage(data) {
-	var observed = data.getObserved(); // Players information
+	var observed = data.getObserved(); // Observed player's information
 
-	updateObserved(observed);
-
-	secondsLeft = data.phase().phase_ends_in;
-
-	$('#time_counter').html(str_pad_left(minutes,'0',2)+':'+str_pad_left(seconds,'0',2));
-
-	var tSide = data.getT();
-	var ctSide = data.getCT();
-
-	updateTeam(tSide, 2);
-	updateTeam(ctSide, 1);
-
-
-	var players = data.getPlayers(); //Array of other players with SteamID as key
-
-
-	//HUD FOR EVERY OTHER PLAYER
-	if(players){
-		for(var steamid in players){
+	if (observed) {
+		$('#player-container').show();
+		updateObserved(observed);
+	} else {
+		//This activates in freecam mode
+		$('#player-container').hide();
+	}
 	
+	//Timer
+	var seconds = Math.floor(data.phase().phase_ends_in % 60);
+	var minutes = Math.floor(data.phase().phase_ends_in / 60);
+	$('#time_counter').html(minutes+':'+str_pad_left(seconds,'0',2));
+
+	//Money object
+	var money = {
+		1: {
+			bank : 0,
+			equip : 0
+		},
+		2: {
+			bank : 0,
+			equip : 0
 		}
 	}
 
+	var players = data.getPlayers();
 
+	//Determine which team is on which side
+	var team1 = 't';
+	var team2 = 'ct';
+
+	if (data.getPlayer(1).team == 'CT') {
+		team1 = 'ct';
+		team2 = 't';
+	}
+
+	//Set colours for health bars
+	$('#team_1.' + team2).removeClass().addClass('team ' + team1);
+	$('#team_2.' + team1).removeClass().addClass('team ' + team2);
+
+	//Set colours for team name/score
+	$('#team_1_header.' + team2).removeClass().addClass('team_info ' + team1);
+	$('#team_2_header.' + team1).removeClass().addClass('team_info ' + team2);
+
+
+	//Side menus for all players
+	if(players){
+		for (var steamid in players) {
+			var player = players[steamid];
+			var number = player.observer_slot;
+
+			var weapons = player.getWeapons();
+			var grenades = player.getGrenades();
+			var stats = player.getStats();
+
+			var elem = $('#player' + number);
+
+			var team_num = (number > 0 && number < 6) ? 1 : 2;
+
+			money[team_num].bank += stats.money;
+			money[team_num].equip += stats.equip_value;
+
+			elem.find('.bar_weapon > img').attr('src', '');
+			updateHtmlIfChanged(stats.health, elem.find('.hp_el'));
+			updateHtmlIfChanged(player.name, elem.find('.bar_username'));
+			updateHtmlIfChanged(stats.kills, elem.find('.bottom_bar .kills'));
+			updateHtmlIfChanged(stats.assists, elem.find('.bottom_bar .assists'));
+			updateHtmlIfChanged(stats.deaths, elem.find('.bottom_bar .deaths'));
+			updateHtmlIfChanged('$' + stats.money, elem.find('.moneys'));
+		};
+	}
+
+	//Team names, score and money
+	updateTeam(data.getTeam1(), money[1].bank, money[1].equip, 1);
+	updateTeam(data.getTeam2(), money[2].bank, money[2].equip, 2);
 }
 
+function updateObserved(player) {
+	var stats = player.getStats();
+	var weapon = player.getCurrentWeapon();
+
+	updateHtmlIfChanged(player.name, $('#current_nick'));
+	updateHtmlIfChanged(stats.health, $('#health-text'));
+	updateHtmlIfChanged(stats.armor, $('#armor-text'));
+
+	var playerTeam = player.team.toLowerCase();
+	var otherTeam;
+
+	if (playerTeam == 't') { otherTeam = 'ct'};
+	if (playerTeam == 'ct') { otherTeam = 't'};
+
+	$('#second_row.' + otherTeam).removeClass().addClass(playerTeam);
+
+	if (guns.indexOf(weapon.type) == -1) {
+		$('#ammo').hide();
+	} else {
+		$('#ammo').show();
+		updateHtmlIfChanged(weapon.ammo_clip.toString(), $('#clip-text'));
+		updateHtmlIfChanged("\/" + weapon.ammo_reserve, $('#reserve-text'));
+	}
+
+	updateHtmlIfChanged(items[weapon.name.replace("weapon_", "")].name, $('#gun_name'));
+	
+	updateHtmlIfChanged(stats.kills.toString(), $('#kills_count'));
+	updateHtmlIfChanged(stats.assists.toString(), $('#assist_count'));
+	updateHtmlIfChanged(stats.deaths.toString(), $('#death_count'));
+}
+
+function updateTeam(info, bank, equip, team) {
+	//score and name
+	var header = $('#team_' + team + '_header');
+	updateHtmlIfChanged(info.score, header.find('.team_score'));
+	updateHtmlIfChanged(info.name, header.find('.team_name'));
+
+	//money
+	updateHtmlIfChanged("$" + bank, $('#team_money_' + team));
+	updateHtmlIfChanged("$" + equip, $('#eq_money_' + team));
+}
+
+//This is used for the timer
 function str_pad_left(string,pad,length) {
     return (new Array(length+1).join(pad)+string).slice(-length);
 }
 
-
-
-function updateObserved(player) {
-	var stats = player.getStats();
-
-	$('#current_nick').html(player.name);
-	$('#health-text').html(stats.health);
-	$('#armor-text').html(stats.armor);
-	$('#clip-text').html(player.getCurrentWeapon().ammo_clip);
-	$('#reserve-text').html("&#47;" + player.getCurrentWeapon().ammo_reserve);
-	$('#kills_count').html(stats.kills);
-	$('#assist_count').html(stats.assists);
-	$('#death_count').html(stats.deaths);
-}
-
-function updateMoney(amount, eq_amount, team) {
-	$('#team_money_' + team).html("$" + amount);
-	$('#eq_money_' + team).html("$" + eq_amount);
-}
-
-function updateTeam(info, number) {
-	var header = $('#team_' + number);
-	header.find('.team_score').html(info.score);
-	header.find('.team_name').html(info.name);
-}
-
-
-
-var flashing = false;
-
-function tick() {
-    /*if (typeof json.extra == "undefined") return;
-
-    var btime = json.extra.round.bomb.maxTime - parseInt(new Date().getTime() / 1000 - bombtime);
-    var rtime = json.extra.round.maxTime - parseInt(new Date().getTime() / 1000 - roundtime);
-
-    if (json.extra.round.bomb.planted) {
-        $(".time").html(btime);
-        $(".time").css("font-size", "15em");
-        $(".timelabel").html("Bomb Planted");
-
-        if (btime < 0) {
-            flashing = false;
-        } else if (btime <= 5) {
-            flash();
-        } else if (btime <= 10) {
-            $(".color").css('background-color', "red");
-        } else {
-            $(".color").css('background-color', 'orange');
-        }
-    } else {
-        var min = 0;
-        var sec = 0;
-
-        if (rtime > 59) {
-            min = 1;
-            sec = rtime - 59;
-        } else {
-            sec = rtime;
-        }
-
-        $(".time").css("font-size", "7em");
-
-        if (json.round.phase === 'freezetime') {
-            $(".timelabel").html("Freeze Time");
-        } else if (json.round.phase === 'live') {
-            $(".timelabel").html("Round Time");
-        } else if (json.round.phase === 'over') {
-            $(".timelabel").html("Round Over");
-        }
-
-        $(".time").html(min > 0 ? min + ":" + sec : sec);
-        $(".color").css('background-color', 'lightblue');
-    }*/
-}
-
-function flash() {
-    $(".color").css('background-color', function() {
-        this.switch = !this.switch;
-        return this.switch ? "red" : "orange";
-    });
-    /*if (json.extra.round.bomb.planted) {
-    	setTimeout(flash, 200);
-    }*/
+function updateHtmlIfChanged(needle, haystack) {
+	if (haystack.html() != needle) { haystack.html(needle) };
 }

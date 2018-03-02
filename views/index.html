@@ -13,18 +13,18 @@
 <div id="header">
 	<div id="match_teams">
 		<div id="round_info" style="height: 100%;">
-			<div id="team_1" class="team_info" style="height: 100%;">
+			<div id="team_1_header" class="team_info ct" style="height: 100%;">
 				<div class="team_score">0</div>
 				
-				<div class="team_logo"><div id="team_flag"></div><img id="team_1_logo" /></div>
+				<div class="team_logo"><div class="team_flag"></div><img id="team_1_logo" /></div>
 				
 				<div class="team_name">Team 1</div>
 				
 				
 			</div>
-			<div id="team_2" class="team_info" style="height: 100%;">
+			<div id="team_2_header" class="team_info t" style="height: 100%;">
 				<div class="team_score">0</div>
-				<div class="team_logo"><div id="team_flag"></div></div>
+				<div class="team_logo"><div class="team_flag"></div><img id="team_2_logo"/></div>
 				
 				<div class="team_name">Team 2</div>
 				
@@ -187,7 +187,7 @@
 		</div>
 	</div>
 </div>-->
-<!--<div id="flash-container">
+<div id="flash-container">
 	<div id="flash_stats"></div>
 	<div id="left_flashes">
 		<div id="flash_player1" class="flash_player st_left"></div>
@@ -203,7 +203,7 @@
 		<div id="flash_player9" class="flash_player st_right"></div>
 		<div id="flash_player0" class="flash_player st_right"></div>
 	</div>
-</div>-->
+</div>
 <div id="player-container">
 	<div id="container2">
 		<div id="first_row">
@@ -229,8 +229,8 @@
 			</div>
 
 		</div>
-		<div id="second_row" class="ct_color">
-			<div id="nick_also" class="inlining">Filler</div>
+		<div id="second_row" class="ct">
+			<div id="gun_name" class="inlining"></div>
 
 			<div class="inlining" id="stats">
 				<div id="kills_count" class="inlining"></div>
@@ -240,26 +240,26 @@
 		</div>
 	</div>
 </div>
-<div id="team-ct" class="team">
+<div id="team_1" class="team ct">
 	<div class="money">
 		<img style="max-height: 70%; margin-top:10px; margin-left:10px; float:left;" class="invert" />
 		<div style="width:25%; float:left; color: #add28b;  text-shadow: 0 0 8px black;">
 			<div class="first_title_tm">Team money:</div>
-			<div class="first_tm" id="team_money_1" style="font-weight:600"></div>
+			<div class="first_tm" id="team_money_1" style="font-weight:600">$0</div>
 		</div>
 		<img style="max-height: 70%; margin-top:10px; float:left;" class="invert" />
 		<div style="width:40%; float:left; color: #f7bf16; text-shadow: 0 0 8px black;">
 			<div class="first_title_tm">Equipment value:</div>
-			<div class="first_tm" id="eq_money_1" style="font-weight:600"></div>
+			<div class="first_tm" id="eq_money_1" style="font-weight:600">$0</div>
 		</div>
 
 	</div>
 	<div id="player1" class="player">
 		<div class="bar1">
 			<div class="hp_bar">
-				<div class="hp_el" id="hp_p">100</div>
-				<div class="bar_username" id="bar_username">undefined</div>
-				<div class="bar_weapon ct" id="weapon_icon"></div>
+				<div class="hp_el">100</div>
+				<div class="bar_username">undefined</div>
+				<div class="bar_weapon ct"><img src=''/></div>
 			</div>
 			<div class="stat_t">
 				<div class="kills">K</div>
@@ -276,7 +276,7 @@
 				<div class="bomb_defuse ct">
 					<img class="invert_brightness" />
 				</div>
-				<div class="bar_weapon ct" id="weapon_icon">
+				<div class="bar_weapon ct">
 				</div>
 			</div>
 
@@ -293,9 +293,9 @@
 	<div id="player2" class="player">
 		<div class="bar1">
 			<div class="hp_bar">
-				<div class="hp_el" id="hp_p">100</div>
-				<div class="bar_username" id="bar_username">undefined</div>
-				<div class="bar_weapon ct" id="weapon_icon"></div>
+				<div class="hp_el">100</div>
+				<div class="bar_username">undefined</div>
+				<div class="bar_weapon ct"><img src=''/></div>
 			</div>
 			<div class="stat_t">
 				<div class="kills">K</div>
@@ -312,7 +312,7 @@
 				<div class="bomb_defuse ct">
 					<img class="invert_brightness" />
 				</div>
-				<div class="bar_weapon ct" id="weapon_icon">
+				<div class="bar_weapon ct">
 				</div>
 			</div>
 
@@ -328,9 +328,9 @@
 	<div id="player3" class="player">
 		<div class="bar1">
 			<div class="hp_bar">
-				<div class="hp_el" id="hp_p">100</div>
-				<div class="bar_username" id="bar_username">undefined</div>
-				<div class="bar_weapon ct" id="weapon_icon"></div>
+				<div class="hp_el">100</div>
+				<div class="bar_username">undefined</div>
+				<div class="bar_weapon ct"><img src=''/></div>
 			</div>
 			<div class="stat_t">
 				<div class="kills">K</div>
@@ -347,7 +347,7 @@
 				<div class="bomb_defuse ct">
 					<img class="invert_brightness" />
 				</div>
-				<div class="bar_weapon ct" id="weapon_icon">
+				<div class="bar_weapon ct">
 				</div>
 			</div>
 
@@ -363,9 +363,9 @@
 	<div id="player4" class="player">
 		<div class="bar1">
 			<div class="hp_bar">
-				<div class="hp_el" id="hp_p">100</div>
-				<div class="bar_username" id="bar_username">undefined</div>
-				<div class="bar_weapon ct" id="weapon_icon"></div>
+				<div class="hp_el">100</div>
+				<div class="bar_username">undefined</div>
+				<div class="bar_weapon ct"><img src=''/></div>
 			</div>
 			<div class="stat_t">
 				<div class="kills">K</div>
@@ -382,7 +382,7 @@
 				<div class="bomb_defuse ct">
 					<img class="invert_brightness" />
 				</div>
-				<div class="bar_weapon ct" id="weapon_icon">
+				<div class="bar_weapon ct">
 				</div>
 			</div>
 
@@ -398,9 +398,9 @@
 	<div id="player5" class="player">
 		<div class="bar1">
 			<div class="hp_bar">
-				<div class="hp_el" id="hp_p">100</div>
-				<div class="bar_username" id="bar_username">undefined</div>
-				<div class="bar_weapon ct" id="weapon_icon"></div>
+				<div class="hp_el">100</div>
+				<div class="bar_username">undefined</div>
+				<div class="bar_weapon ct"><img src=''/></div>
 			</div>
 			<div class="stat_t">
 				<div class="kills">K</div>
@@ -417,7 +417,7 @@
 				<div class="bomb_defuse ct">
 					<img class="invert_brightness" />
 				</div>
-				<div class="bar_weapon ct" id="weapon_icon">
+				<div class="bar_weapon ct">
 				</div>
 			</div>
 
@@ -431,7 +431,7 @@
 		</div>
 	</div>
 </div>
-<div id="team-t" class="team">
+<div id="team_2" class="team t">
 	<div class="money">
 		<img style="max-height: 70%; margin-top:10px; margin-right:10px; float:right; " class="invert" />
 		<div style="width:25%; float:right; color: #add28b;  text-shadow: 0 0 8px black; text-align:right;">
@@ -447,9 +447,9 @@
 	<div id="player6" class="player">
 		<div class="bar1">
 			<div class="hp_bar">
-				<div class="hp_el" id="hp_p">100</div>
-				<div class="bar_username" id="bar_username">undefined</div>
-				<div class="bar_weapon t" id="weapon_icon"></div>
+				<div class="hp_el">100</div>
+				<div class="bar_username">undefined</div>
+				<div class="bar_weapon t"><img src=''/></div>
 			</div>
 			<div class="stat_t">
 				<div class="kills">K</div>
@@ -466,7 +466,7 @@
 				<div class="bomb_defuse t">
 					<img class="invert_brightness" />
 				</div>
-				<div class="bar_weapon t" id="weapon_icon">
+				<div class="bar_weapon t">
 				</div>
 			</div>
 
@@ -483,9 +483,9 @@
 	<div id="player7" class="player">
 		<div class="bar1">
 			<div class="hp_bar">
-				<div class="hp_el" id="hp_p">100</div>
-				<div class="bar_username" id="bar_username">undefined</div>
-				<div class="bar_weapon t" id="weapon_icon"></div>
+				<div class="hp_el">100</div>
+				<div class="bar_username">undefined</div>
+				<div class="bar_weapon t"><img src=''/></div>
 			</div>
 			<div class="stat_t">
 				<div class="kills">K</div>
@@ -502,7 +502,7 @@
 				<div class="bomb_defuse t">
 					<img class="invert_brightness" />
 				</div>
-				<div class="bar_weapon t" id="weapon_icon">
+				<div class="bar_weapon t">
 				</div>
 			</div>
 
@@ -518,9 +518,9 @@
 	<div id="player8" class="player">
 		<div class="bar1">
 			<div class="hp_bar">
-				<div class="hp_el" id="hp_p">100</div>
-				<div class="bar_username" id="bar_username">undefined</div>
-				<div class="bar_weapon t" id="weapon_icon"></div>
+				<div class="hp_el">100</div>
+				<div class="bar_username">undefined</div>
+				<div class="bar_weapon t"><img src=''/></div>
 			</div>
 			<div class="stat_t">
 				<div class="kills">K</div>
@@ -537,7 +537,7 @@
 				<div class="bomb_defuse t">
 					<img class="invert_brightness" />
 				</div>
-				<div class="bar_weapon t" id="weapon_icon">
+				<div class="bar_weapon t">
 				</div>
 			</div>
 
@@ -553,9 +553,9 @@
 	<div id="player9" class="player">
 		<div class="bar1">
 			<div class="hp_bar">
-				<div class="hp_el" id="hp_p">100</div>
-				<div class="bar_username" id="bar_username">undefined</div>
-				<div class="bar_weapon t" id="weapon_icon"></div>
+				<div class="hp_el">100</div>
+				<div class="bar_username">undefined</div>
+				<div class="bar_weapon t"><img src=''/></div>
 			</div>
 			<div class="stat_t">
 				<div class="kills">K</div>
@@ -572,7 +572,7 @@
 				<div class="bomb_defuse t">
 					<img class="invert_brightness" />
 				</div>
-				<div class="bar_weapon t" id="weapon_icon">
+				<div class="bar_weapon t">
 				</div>
 			</div>
 
@@ -588,9 +588,9 @@
 	<div id="player0" class="player">
 		<div class="bar1">
 			<div class="hp_bar">
-				<div class="hp_el" id="hp_p">100</div>
-				<div class="bar_username" id="bar_username">undefined</div>
-				<div class="bar_weapon t" id="weapon_icon"></div>
+				<div class="hp_el">100</div>
+				<div class="bar_username">undefined</div>
+				<div class="bar_weapon t"><img src=''/></div>
 			</div>
 			<div class="stat_t">
 				<div class="kills">K</div>
@@ -607,7 +607,7 @@
 				<div class="bomb_defuse t">
 					<img class="invert_brightness" />
 				</div>
-				<div class="bar_weapon t" id="weapon_icon">
+				<div class="bar_weapon t">
 				</div>
 			</div>
 

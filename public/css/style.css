@@ -9,7 +9,7 @@ body {
     color: white;
     background-color: rgba(0, 0, 0, 0);
 }
-#team_1 > #team_logo > #team_flag {
+#team_1_header > .team_logo > .team_flag {
     position: absolute;
     z-index: -1;
     display: block;
@@ -24,7 +24,7 @@ body {
     -ms-filter: blur(2px);
     filter: blur(2px);
 }
-#team_2 > #team_logo > #team_flag {
+#team_2_header > .team_logo > .team_flag {
     position: absolute;
     z-index: -1;
     display: block;
@@ -49,6 +49,7 @@ body {
     position: fixed;
     width: 100%;
     height: 100%;
+    -webkit-transition: color .25s ease-in-out;
     transition: color .25s ease-in-out;
 }
 
@@ -62,11 +63,13 @@ body {
 .timelabel {
     font-size: 1.3em;
     padding-top: 30px;
+    -webkit-transition: .25s ease-in-out;
     transition: .25s ease-in-out;
 }
 
 .time {
     font-size: 7em;
+    -webkit-transition: .25s ease-in-out;
     transition: .25s ease-in-out;
 }
 .first_title_tm {
@@ -75,7 +78,8 @@ body {
     vertical-align: bottom;
 }
 .invert {
-    filter: invert(100%);
+    -webkit-filter: invert(100%);
+            filter: invert(100%);
 }
 .first_tm {
     height: 60%;
@@ -125,10 +129,12 @@ body {
 }
 
 .adr_bar.st_right {
+    background: -webkit-gradient(linear, left top, right top, from(#3498db), to(#5788a8));
     background: linear-gradient(to right, #3498db, #5788a8);
 }
 
 .adr_bar.st_left {
+    background: -webkit-gradient(linear, left top, right top, from(#c19511), to(#f7bf16));
     background: linear-gradient(to right, #c19511, #f7bf16);
 }
 
@@ -223,16 +229,20 @@ body {
 }
 
 .t-win.fst{
+    background: -webkit-gradient(linear,left bottom, left top,from(rgba(0, 0, 0, 0)), color-stop(50%, rgba(0, 0, 0, 0)), color-stop(50%, #f7bf16), color-stop(85%, rgba(0, 0, 0, 0)));
     background: linear-gradient(to top,rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 50%, #f7bf16 50%, rgba(0, 0, 0, 0) 85%);
 }
 .ct-win.fst{
+    background: -webkit-gradient(linear,  left bottom, left top,  from(rgba(0, 0, 0, 0)), color-stop(50%, rgba(0, 0, 0, 0)), color-stop(50%, #5788a8), color-stop(85%, rgba(0, 0, 0, 0)));
     background: linear-gradient(to top,  rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 50%, #5788a8 50%, rgba(0, 0, 0, 0) 85%);
 }
 
 .t-win.snd{
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(15%, rgba(0, 0, 0, 0)), color-stop(46%, #f7bf16), color-stop(46%, rgba(0, 0, 0, 0)));
     background: linear-gradient(to top, rgba(0, 0, 0, 0) 15%, #f7bf16 46%, rgba(0, 0, 0, 0) 46%);
 }
 .ct-win.snd{
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(15%, rgba(0, 0, 0, 0)), color-stop(46%, #5788a8), color-stop(46%, rgba(0, 0, 0, 0)));
     background: linear-gradient(to top, rgba(0, 0, 0, 0) 15%, #5788a8 46%, rgba(0, 0, 0, 0) 46%);
 }
 .fst > img{
@@ -247,10 +257,12 @@ body {
     margin-top:10px;
 }
 .skull, .bomb{
-    filter: brightness(140%);
+    -webkit-filter: brightness(140%);
+            filter: brightness(140%);
 }
 .defuse{
-    filter: brightness(200%);
+    -webkit-filter: brightness(200%);
+            filter: brightness(200%);
 }
 .t-win,
 .ct-win{
@@ -304,7 +316,8 @@ body {
     display: inline-block;
     width: calc(100% - 118px);
     height: 20px;
-    transform: skewX(40deg);
+    -webkit-transform: skewX(40deg);
+            transform: skewX(40deg);
     background-color: rgba(0, 0, 0, 0.65);
     overflow: hidden;
     position: relative;
@@ -353,7 +366,8 @@ body {
     display: inline-block;
     width: calc(100% - 98px);
     height: 20px;
-    transform: skewX(40deg);
+    -webkit-transform: skewX(40deg);
+            transform: skewX(40deg);
     background-color: rgba(0, 0, 0, 0.65);
     overflow: hidden;
     position: relative;
@@ -364,6 +378,7 @@ body {
     height: 30px;
     position: absolute;
     top: 0px;
+    -webkit-transition: left 0.2s linear;
     transition: left 0.2s linear;
 }
 
@@ -383,12 +398,14 @@ body {
     background-color: #2c3e50;
     height: 63px;
     width: 300px;
-    transform: skewX(-40deg);
+    -webkit-transform: skewX(-40deg);
+            transform: skewX(-40deg);
 }
 
 #ammo-container #container2 {
     margin-right: 60px;
-    transform: skewX(40deg);
+    -webkit-transform: skewX(40deg);
+            transform: skewX(40deg);
     float: right;
 }
 
@@ -405,25 +422,12 @@ body {
 }
 
 #first_row {
-    background: -webkit-linear-gradient(right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
-    /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
-    /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
-    /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
-    /* Standard syntax (must be last)*/
+    background: -webkit-gradient(linear, right top, left top, from(rgba(0, 0, 0, 0.2)), to(rgba(0, 0, 0, 1)));
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 1));
+
     height: 70%;
     padding-left: 15px;
     width: 100%;
-}
-
-.ct_color {
-    background-color: #5788a8;
-}
-
-.t_color {
-    background-color: #c19511;
 }
 
 #second_row {
@@ -431,7 +435,18 @@ body {
     width: 100%;
     padding-left: 15px;
     text-shadow: 2px 2px 8px black;
+    background: -webkit-gradient(linear, right top, left top, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 1)));
     background: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+}
+
+#second_row.ct {
+    background: -webkit-gradient(linear, right top, left top, from(rgba(0, 0, 0, 0)), to(#5788a8));
+    background: linear-gradient(to left, rgba(0, 0, 0, 0), #5788a8);
+}
+
+#second_row.t {
+    background: -webkit-gradient(linear, right top, left top, from(rgba(0, 0, 0, 0)), to(#c19511));
+    background: linear-gradient(to left, rgba(0, 0, 0, 0), #c19511);
 }
 
 #current_nick {
@@ -491,9 +506,11 @@ body {
     margin-top: 18px;
 }
 .adr_bar.st_right{
+    background: -webkit-gradient(linear, left top, right top, from(#3498db), to(#5788a8));
     background: linear-gradient(to right, #3498db, #5788a8);
 }
 .adr_bar.st_left{
+    background: -webkit-gradient(linear, left top, right top, from(#c19511), to(#f7bf16));
     background: linear-gradient(to right, #c19511, #f7bf16);
 }
 
@@ -552,6 +569,7 @@ body {
 #stats-container {
     position: fixed;
     bottom: 0px;
+    background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.5)), color-stop(rgba(0, 0, 0, 0.85)), to(rgba(0, 0, 0, 0.5)));
     background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.5));
     font-family: 'Saira Semi Condensed', sans-serif;
     left: 50%;
@@ -615,7 +633,8 @@ padding-right:10px;
 
 #weapon_flashbang {
     background-image: url("weapon_flashbang.png");
-    filter: invert(100%);
+    -webkit-filter: invert(100%);
+            filter: invert(100%);
     position: absolute;
     bottom: 0;
     height: 100%;
@@ -627,7 +646,8 @@ padding-right:10px;
 
 #weapon_smokegrenade {
     background-image: url("weapon_smokegrenade.png");
-    filter: invert(100%);
+    -webkit-filter: invert(100%);
+            filter: invert(100%);
     position: absolute;
     bottom: 0;
     max-height: 100%;
@@ -640,7 +660,8 @@ padding-right:10px;
 
 #weapon_hegrenade {
     background-image: url("weapon_hegrenade.png");
-    filter: invert(100%);
+    -webkit-filter: invert(100%);
+            filter: invert(100%);
     position: absolute;
     bottom: 0;
     max-height: 100%;
@@ -653,7 +674,8 @@ padding-right:10px;
 
 #weapon_decoy {
     background-image: url("weapon_decoy.png");
-    filter: invert(100%);
+    -webkit-filter: invert(100%);
+            filter: invert(100%);
     position: absolute;
     bottom: 0;
     max-height: 100%;
@@ -666,7 +688,8 @@ padding-right:10px;
 
 #weapon_molotov {
     background-image: url("weapon_molotov.png");
-    filter: invert(100%);
+    -webkit-filter: invert(100%);
+            filter: invert(100%);
     position: absolute;
     bottom: 0;
     max-height: 100%;
@@ -679,7 +702,8 @@ padding-right:10px;
 
 #weapon_incgrenade {
     background-image: url("weapon_incgrenade.png");
-    filter: invert(100%);
+    -webkit-filter: invert(100%);
+            filter: invert(100%);
     position: absolute;
     bottom: 0;
     max-height: 100%;
@@ -695,7 +719,7 @@ padding-right:10px;
     height: 420px;
 }
 
-#team-ct {
+#team_1 {
     position: fixed;
     left: 0;
     bottom: 0;
@@ -704,7 +728,7 @@ padding-right:10px;
     width:165px !important;
 }
 
-#team-t {
+#team_2 {
     position: fixed;
     right: 0;
     bottom: 0;
@@ -729,33 +753,33 @@ padding-right:10px;
     height: 27px;
 }
 
-#team-ct>.player>.bar1>.hp_bar {
+#team_1>.player>.bar1>.hp_bar {
     width: 295px;
-    background: #5788a8;
     height: 100%;
     float: left;
     text-shadow: 0px 0px 10px black;
-    transform: scale(0.99,0.9);
+    -webkit-transform: scale(0.99,0.9);
+            transform: scale(0.99,0.9);
 }
 
-#team-t>.player>.bar1>.hp_bar {
-    width: 295px;
+.team.ct>.player>.bar1>.hp_bar {
+    background: #5788a8;
+}
+.team.t>.player>.bar1>.hp_bar {
     background: #c19511;
+}
+
+#team_2>.player>.bar1>.hp_bar {
+    width: 295px;
     height: 100%;
     float: right;
     text-shadow: 0px 0px 10px black;
-    transform: scale(0.99,0.9);
+    -webkit-transform: scale(0.99,0.9);
+            transform: scale(0.99,0.9);
 }
 
 .money {
     height: 85px;
-    background: rgba(0, 0, 0, 0.65);
-}
-#team-ct > .money{
-     background: linear-gradient(to right, rgba(0, 0, 0, 0.65) 295px, rgba(0, 0, 0, 0.65) 295px, rgba(0, 0, 0, 0.5) 410px, rgba(0, 0, 0, 0.0) 410px);
-}
-#team-t > .money{
-     background: linear-gradient(to left, rgba(0, 0, 0, 0.65) 295px, rgba(0, 0, 0, 0.65) 295px, rgba(0, 0, 0, 0.5) 410px, rgba(0, 0, 0, 0.0) 410px);
 }
 
 .stat_t {
@@ -764,16 +788,18 @@ padding-right:10px;
     height: 100%;
     width: 115px;
 }
-#team-ct > .player > .bar1 >.stat_t, #team-ct > .player > .bottom_bar >.stat_t{
+#team_1 > .player > .bar1 >.stat_t, #team_1 > .player > .bottom_bar >.stat_t{
+    background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.65)), to(rgba(0, 0, 0, 0.5)));
     background: linear-gradient(to right, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.5));
 }
-#team-t > .player > .bar1 >.stat_t, #team-t > .player > .bottom_bar >.stat_t{
+#team_2 > .player > .bar1 >.stat_t, #team_2 > .player > .bottom_bar >.stat_t{
+    background: -webkit-gradient(linear, right top, left top, from(rgba(0, 0, 0, 0.65)), to(rgba(0, 0, 0, 0.5)));
     background: linear-gradient(to left, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.5));
 }
-#team-ct > .player{
+#team_1 > .player{
     background: linear-gradient(to right, rgba(0, 0, 0, 0.65) 295px, rgba(0, 0, 0, 0.0) 295px);
 }
-#team-t > .player{
+#team_2 > .player{
     background: linear-gradient(to left, rgba(0, 0, 0, 0.65) 295px, rgba(0, 0, 0, 0.0) 295px);
 }
 
@@ -790,30 +816,30 @@ padding-right:10px;
     font-weight: 400;
 }
 
-#team-ct>.player>.bar1>.hp_bar>.hp_el,
-#team-ct>.player>.bottom_bar>.equip_bar>.hp_el {
+#team_1>.player>.bar1>.hp_bar>.hp_el,
+#team_1>.player>.bottom_bar>.equip_bar>.hp_el {
     float: left;
     width: 40px;
     height: 100%;
     text-align: center;
 }
 
-#team-t>.player>.bar1>.hp_bar>.hp_el,
-#team-t>.player>.bottom_bar>.equip_bar>.hp_el {
+#team_2>.player>.bar1>.hp_bar>.hp_el,
+#team_2>.player>.bottom_bar>.equip_bar>.hp_el {
     float: right;
     width: 40px;
     height: 100%;
     text-align: center;
 }
 
-#team-ct>.player>.bar1>.hp_bar>.bar_username {
+#team_1>.player>.bar1>.hp_bar>.bar_username {
     float: left;
     margin-left: 15px;
     width: 120px;
     overflow: hidden;
 }
 
-#team-t>.player>.bar1>.hp_bar>.bar_username {
+#team_2>.player>.bar1>.hp_bar>.bar_username {
     float: right;
     text-align:right;
     margin-right: 15px;
@@ -821,27 +847,27 @@ padding-right:10px;
     overflow: hidden;
 }
 
-#team-ct>.player>.bar1>.hp_bar>.bar_weapon,
-#team-ct>.player>.bottom_bar>.equip_bar>.bar_weapon {
+#team_1>.player>.bar1>.hp_bar>.bar_weapon,
+#team_1>.player>.bottom_bar>.equip_bar>.bar_weapon {
     float: right;
     width: 120px;
     height: 100%;
 }
 
-#team-t>.player>.bar1>.hp_bar>.bar_weapon,
-#team-t>.player>.bottom_bar>.equip_bar>.bar_weapon {
+#team_2>.player>.bar1>.hp_bar>.bar_weapon,
+#team_2>.player>.bottom_bar>.equip_bar>.bar_weapon {
     float: left;
     width: 120px;
     height: 100%;
 }
 
-#team-ct>.player>.bottom_bar>.equip_bar {
+#team_1>.player>.bottom_bar>.equip_bar {
     width: 295px;
     height: 100%;
     float: left;
 }
 
-#team-t>.player>.bottom_bar>.equip_bar {
+#team_2>.player>.bottom_bar>.equip_bar {
     width: 295px;
     height: 100%;
     float: right;
@@ -888,15 +914,18 @@ padding-right:10px;
 }
 
 .bar_weapon>.invert {
-    filter: invert(70%);
+    -webkit-filter: invert(70%);
+            filter: invert(70%);
 }
 
 .bomb_defuse>.invert_brightness {
-    filter: brightness(5%) invert(100%);
+    -webkit-filter: brightness(5%) invert(100%);
+            filter: brightness(5%) invert(100%);
 }
 
 .bar_weapon>.invert.checked {
-    filter: invert(100%);
+    -webkit-filter: invert(100%);
+            filter: invert(100%);
 }
 
 .equip_bar>.moneys {
@@ -906,11 +935,10 @@ padding-right:10px;
 }
 
 .img-hor {
-    -moz-transform: scaleX(-1);
-    -o-transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
-    filter: FlipH;
+    -webkit-filter: FlipH;
+            filter: FlipH;
     -ms-filter: "FlipH";
 }
 
@@ -926,14 +954,16 @@ padding-right:10px;
 }
 
 .hp_bar>.bar_weapon>img.invert {
-    filter: drop-shadow(0.5px 0.5px 1px white) drop-shadow(-0.5px -0.5px 1px white) invert(70%);
+    -webkit-filter: drop-shadow(0.5px 0.5px 1px white) drop-shadow(-0.5px -0.5px 1px white) invert(70%);
+            filter: drop-shadow(0.5px 0.5px 1px white) drop-shadow(-0.5px -0.5px 1px white) invert(70%);
 }
 
 .hp_bar>.bar_weapon>img.checked.invert {
-    filter: drop-shadow(0.5px 0.5px 1px white) drop-shadow(-0.5px -0.5px 1px white) invert(100%);
+    -webkit-filter: drop-shadow(0.5px 0.5px 1px white) drop-shadow(-0.5px -0.5px 1px white) invert(100%);
+            filter: drop-shadow(0.5px 0.5px 1px white) drop-shadow(-0.5px -0.5px 1px white) invert(100%);
 }
 
-#team-t>.player {
+#team_2>.player {
     float: right;
 }
 #header {
@@ -952,6 +982,7 @@ padding-right:10px;
     margin-top: 5px;
 
     height: 30px;
+    background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0)), color-stop(rgba(0, 0, 0, 0.65)), to(rgba(0, 0, 0, 0)));
     background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0));
 }
 
@@ -959,9 +990,10 @@ padding-right:10px;
     width: 100%;
     margin-top: 10px;
     height: 55px;
+    background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0)), color-stop(rgba(0, 0, 0, 0.7)), to(rgba(0, 0, 0, 0)));
     background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
 }
-#team_name{
+.team_name{
     text-shadow: 0 0 10px black;
 }
 
@@ -988,52 +1020,59 @@ padding-right:10px;
     font-weight: bold;
 }
 
-#team_1 {
+#team_1_header {
     text-align:right;
     float: left;
+    
+}
+
+#team_2_header {
+    text-align: left;
+    float: right;
+    
+}
+.team_info.t {
+    color:#f7bf16;
+}
+.team_info.ct {
     color: #73afd6;
 }
 
-#team_2 {
-    text-align: left;
-    float: right;
-    color:#f7bf16;
-}
-#team_score{
+.team_score{
     margin-top:5px;
 }
-#team_1 > #team_name{
+#team_1_header > .team_name{
     margin-top:5px;
     float:right;
 }
 
-#team_2 > #team_name{
+#team_2_header > .team_name{
     margin-top:5px;
     float:left;
 }
-#team_1 > #team_score{
+#team_1_header > .team_score{
     margin-right:10px;
     float:right;
 }
-#team_2 > #team_score{
+#team_2_header > .team_score{
     margin-left:10px;
     float:left;
 }
-#team_logo{
+.team_logo{
     width:10%;
     height:100%;
     margin-right:20px;
     margin-left:20px;
 }
-#team_logo > img{
+.team_logo > img{
     margin-top:8px;
     height: 70%;
     
 }
-#team_1>#team_logo{
+#team_1_header>.team_logo{
     float:right;
 }
-#team_2>#team_logo{
+#team_2_header>.team_logo{
     float:left;
 }
 #flash-container {
@@ -1096,6 +1135,7 @@ padding-right:10px;
 #drop-container {
     position: fixed;
     top: 0px;
+    background: -webkit-gradient(linear, right top, left top, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0)));
     background: linear-gradient(to left, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
     font-family: 'Saira Semi Condensed', sans-serif;
     right: 0;
