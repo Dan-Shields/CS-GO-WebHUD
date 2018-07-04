@@ -1,6 +1,8 @@
 # CS:GO WebHUD
+### Please note this repo is full of bugs and is largely incomplete.
+####  I decided to go closed source for the time being, but this is a nice starting point for anyone wanting to make their own WebHUD.
 
-This is the HUD used for [KotN 2018](https://uomesports.co.uk), and potentially your next CSGO event.
+This is the HUD created for [KotN 2018](https://uomesports.co.uk) (unfortunately not used), but potentially your next CSGO event.
 
 Original design by [osztenkurden]( https://github.com/osztenkurden/CS-GO-Observer-Custom-HUD), base code by [Double0negative](https://github.com/Double0negative), HUD logic and updated design by yours truly.
 
